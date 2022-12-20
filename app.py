@@ -27,10 +27,18 @@ def get_tweets(id, start_time, end_time):
 
 @app.route("/")
 def hello_world():
-    return "Hello World"
+    return "Hi there! Python API is working!"
 
-@app.route("/get-comments", methods=["POST"])
-def get_comments():
+@app.route("/get-searched-tweets-list", methods=["POST"])
+def get_searched_tweets_list():
+    input_json = request.get_json(force = True)
+    body = {
+        "text": input_json["text"],
+    }
+    return jsonify(body)
+
+@app.route("/get-comments-analised", methods=["POST"])
+def get_comments_analised():
     input_json = request.get_json(force = True)
     body = {
         "id": input_json["id"],
