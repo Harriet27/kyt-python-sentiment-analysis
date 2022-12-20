@@ -3,6 +3,7 @@ import requests
 from datetime import datetime
 from transformers import pipeline
 import pandas as pd
+import os.path as ospath
 
 base_url = "http://localhost:3001"
 uri = base_url + "/twitter/search-all/in_reply_to_status_id?id=448110947937165312&start_time=2014-03-08&end_time=2014-04-05"
@@ -34,4 +35,5 @@ sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
 
 # concat 2 csv into single csv fle
 data_csv = pd.concat([content_csv, sentiment_analysis_result_csv], axis=1)
-data_csv.to_csv(f'data_csv_{time_now}.csv', index=False)
+# data_csv.to_csv(f'data_csv_{time_now}.csv', index=False)
+data_csv.to_csv(ospath.join('csv_files', f'data_csv_{time_now}.csv'), index = False)
