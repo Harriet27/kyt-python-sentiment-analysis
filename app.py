@@ -60,7 +60,29 @@ def get_comments():
         "end_time": input_json["end_time"],
     }
     data = get_tweets(body["id"], body["start_time"], body["end_time"])
-    return jsonify(data)
+    # create response data to DataFrame
+    data_csv = pd.DataFrame(data)
+    # create unique file name extension
+    time_now = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    # extract comments from data to array of strings
+    comments_arr = []
+    for item in data:
+        comments_arr.append(item['text'])
+    # do some sentiment analysis
+    sentiment_classifier = pipeline('sentiment-analysis', model='finiteautomata/bertweet-base-sentiment-analysis')
+    sentiment_analysis_result = sentiment_classifier(comments_arr)
+    # create sentiment analysis data to DataFrame
+    sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
+    # combine 2 DataFrames into single CSV
+    data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
+    data_csv.to_csv(ospath.join('csv_files', f'data_csv_{time_now}.csv'), index = False)
+    # concat 2 list of dictionaries
+    result = []
+    for index_a, item_a in enumerate(data):
+        for index_b, item_b in enumerate(sentiment_analysis_result):
+            merged_data = { **data[index_a], **sentiment_analysis_result[index_b] }
+        result.append(merged_data)
+    return jsonify(result)
 
 if __name__ == "__main__":
     app.run(debug = True)

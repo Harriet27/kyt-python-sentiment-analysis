@@ -31,7 +31,7 @@ print("Analysis done")
 sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
 
 # concat 2 csv into single csv fle
-data_csv = pd.concat([content_csv, sentiment_analysis_result_csv], axis=1)
+data_csv = pd.concat([content_csv, sentiment_analysis_result_csv], axis = 1)
 print("Building CSV")
 data_csv.to_csv(ospath.join('csv_files', f'data_csv_{time_now}.csv'), index = False)
 print("CSV created")
