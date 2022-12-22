@@ -49,7 +49,7 @@ def get_comments_analised():
     # create response data to DataFrame
     data_csv = pd.DataFrame(data)
     # create unique file name extension
-    time_now = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    time_now = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     # extract comments only from list of dictionaries from api response
     comments_arr = []
     for item in data:
@@ -61,7 +61,8 @@ def get_comments_analised():
     sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
     # combine 2 DataFrames into single CSV
     data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
-    data_csv.to_csv(ospath.join('csv_files', f'data_csv_{time_now}.csv'), index = False)
+    filename = f'data_csv_{time_now}.csv'
+    data_csv.to_csv(ospath.join('csv_files', filename), index = False)
     # concat 2 list of dictionaries
     result = []
     for index_a, item_a in enumerate(data):
@@ -70,5 +71,14 @@ def get_comments_analised():
         result.append(merged_data)
     return jsonify(result)
 
+@app.route("/download")
+def download():
+    url = "https://qubeshub.org/publications/1220/serve/1/3861?el=1&download=1"
+    r = requests.get(url)
+    filename = r.headers["Content-Disposition"].split('"')[1]
+    with open(filename, "wb") as f_out:
+        print(f"Downloading {filename}")
+        return f_out.write(r.content)
+
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(port = 8000, debug = True)
