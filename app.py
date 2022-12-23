@@ -4,52 +4,77 @@ from datetime import datetime
 from transformers import pipeline
 import pandas as pd
 import os.path as ospath
-import argparse
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
 base_url = "http://localhost:3001"
 
-def get_tweets(id, start_time, end_time):
+'''
+This is to set function to hit JS API
+'''
+def get_comments(id, start_time, end_time):
     uri = base_url + f'/twitter/search-all/in_reply_to_status_id?id={id}&start_time={start_time}&end_time={end_time}'
     response = requests.get(uri)
     response_content = json.loads(response.content)
     return response_content
 
-# if __name__ == '__main__':
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument('id', type=str, help='The ID of the tweet.')
-#     parser.add_argument('start_time', type=str, help='Collect tweets starting from this date.')
-#     parser.add_argument('end_time', type=str, help='End collection of tweets on this date.')
-#     args = parser.parse_args()
-#     df = get_tweets(args.id, args.start_time, args.end_time)
+def get_tweet_list(user, maxResults, fromYear, fromMonth, fromDate, toYear, toMonth, toDate):
+    uri = base_url + '/twitter/full-archive-search'
+    body = {
+        "user": user,
+        "maxResults": maxResults,
+        "fromYear": fromYear,
+        "fromMonth": fromMonth,
+        "fromDate": fromDate,
+        "toYear": toYear,
+        "toMonth": toMonth,
+        "toDate": toDate,
+    }
+    response = requests.post(uri, json = body)
+    response_content = json.loads(response.content)
+    return response_content
 
+
+'''
+Python API Router
+'''
 @app.route("/")
 def hello_world():
     return "Hi there! Python API is working!"
 
 @app.route("/get-searched-tweets-list", methods=["POST"])
 def get_searched_tweets_list():
-    input_json = request.get_json(force = True)
+    input_json = request.get_json()
     body = {
-        "text": input_json["text"],
+        "user": input_json["user"],
+        "maxResults": input_json["maxResults"],
+        "fromYear": input_json["fromYear"],
+        "fromMonth": input_json["fromMonth"],
+        "fromDate": input_json["fromDate"],
+        "toYear": input_json["toYear"],
+        "toMonth": input_json["toMonth"],
+        "toDate": input_json["toDate"],
     }
-    return jsonify(body)
+    data = get_tweet_list(body["user"], body["maxResults"], body["fromYear"], body["fromMonth"], body["fromDate"], body["toYear"], body["toMonth"], body["toDate"])
+    # create response data to DataFrame
+    data_csv = pd.DataFrame(data)
+    # extract DataFrame to csv file
+    filename = f'{body["user"]}_tweets_list_{body["fromYear"] + "-" + body["fromMonth"] + "-" + body["fromDate"]}_{body["toYear"] + "-" + body["toMonth"] + "-" + body["toDate"]}.csv'
+    data_csv.to_csv(ospath.join('csv_files/searched_tweets_list', filename), index = False)
+    return data
 
 @app.route("/get-comments-analised", methods=["POST"])
 def get_comments_analised():
-    input_json = request.get_json(force = True)
+    input_json = request.get_json()
     body = {
         "id": input_json["id"],
         "start_time": input_json["start_time"],
         "end_time": input_json["end_time"],
     }
-    data = get_tweets(body["id"], body["start_time"], body["end_time"])
+    data = get_comments(body["id"], body["start_time"], body["end_time"])
     # create response data to DataFrame
     data_csv = pd.DataFrame(data)
-    # create unique file name extension
-    time_now = datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
     # extract comments only from list of dictionaries from api response
     comments_arr = []
     for item in data:
@@ -61,8 +86,8 @@ def get_comments_analised():
     sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
     # combine 2 DataFrames into single CSV
     data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
-    filename = f'data_csv_{time_now}.csv'
-    data_csv.to_csv(ospath.join('csv_files', filename), index = False)
+    filename = f'{body["id"]}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
+    data_csv.to_csv(ospath.join('csv_files/tweet_comments', filename), index = False)
     # concat 2 list of dictionaries
     result = []
     for index_a, item_a in enumerate(data):
