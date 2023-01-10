@@ -33,7 +33,7 @@ def get_tweet_list(user, maxResults, fromYear, fromMonth, fromDate, toYear, toMo
     }
     response = requests.post(uri, json = body)
     response_content = json.loads(response.content)
-    return response_content
+    return response_content["result"]
 
 
 '''
@@ -49,18 +49,18 @@ def get_searched_tweets_list():
     body = {
         "user": input_json["user"],
         "maxResults": input_json["maxResults"],
-        "fromYear": input_json["fromYear"],
-        "fromMonth": input_json["fromMonth"],
         "fromDate": input_json["fromDate"],
-        "toYear": input_json["toYear"],
-        "toMonth": input_json["toMonth"],
+        "fromMonth": input_json["fromMonth"],
+        "fromYear": input_json["fromYear"],
         "toDate": input_json["toDate"],
+        "toMonth": input_json["toMonth"],
+        "toYear": input_json["toYear"],
     }
     data = get_tweet_list(body["user"], body["maxResults"], body["fromYear"], body["fromMonth"], body["fromDate"], body["toYear"], body["toMonth"], body["toDate"])
     # create response data to DataFrame
     data_csv = pd.DataFrame(data)
     # extract DataFrame to csv file
-    filename = f'{body["user"]}_tweets_list_{body["fromYear"] + "-" + body["fromMonth"] + "-" + body["fromDate"]}_{body["toYear"] + "-" + body["toMonth"] + "-" + body["toDate"]}.csv'
+    filename = f'{body["user"]}_tweets_list_{body["fromDate"] + "-" + body["fromMonth"] + "-" + body["fromYear"]}_{body["toDate"] + "-" + body["toMonth"] + "-" + body["toYear"]}.csv'
     data_csv.to_csv(ospath.join('csv_files/searched_tweets_list', filename), index = False)
     return data
 
@@ -73,28 +73,40 @@ def get_comments_analised():
         "end_time": input_json["end_time"],
     }
     data = get_comments(body["id"], body["start_time"], body["end_time"])
-    # create response data to DataFrame
-    data_csv = pd.DataFrame(data)
-    # extract comments only from list of dictionaries from api response
-    comments_arr = []
-    for item in data:
-        comments_arr.append(item['text'])
-    # do some sentiment analysis
-    sentiment_classifier = pipeline('sentiment-analysis', model='finiteautomata/bertweet-base-sentiment-analysis')
-    sentiment_analysis_result = sentiment_classifier(comments_arr)
-    # create sentiment analysis data to DataFrame
-    sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
-    # combine 2 DataFrames into single CSV
-    data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
-    filename = f'{body["id"]}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
-    data_csv.to_csv(ospath.join('csv_files/tweet_comments', filename), index = False)
-    # concat 2 list of dictionaries
-    result = []
-    for index_a, item_a in enumerate(data):
-        for index_b, item_b in enumerate(sentiment_analysis_result):
-            merged_data = { **data[index_a], **sentiment_analysis_result[index_b] }
-        result.append(merged_data)
-    return jsonify(result)
+    if data["message"] == "Comments found!":
+        # create response data to DataFrame
+        data_csv = pd.DataFrame(data)
+        # extract comments only from list of dictionaries from api response
+        comments_arr = []
+        for item in data:
+            comments_arr.append(item['text'])
+        # do some sentiment analysis
+        sentiment_classifier = pipeline('sentiment-analysis', model='finiteautomata/bertweet-base-sentiment-analysis')
+        sentiment_analysis_result = sentiment_classifier(comments_arr)
+        # create sentiment analysis data to DataFrame
+        sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
+        # combine 2 DataFrames into single CSV
+        data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
+        filename = f'{body["id"]}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
+        data_csv.to_csv(ospath.join('csv_files/tweet_comments', filename), index = False)
+        # concat 2 list of dictionaries
+        result = []
+        for index_a, item_a in enumerate(data):
+            for index_b, item_b in enumerate(sentiment_analysis_result):
+                merged_data = { **data[index_a], **sentiment_analysis_result[index_b] }
+            result.append(merged_data)
+        return jsonify(result)
+    elif data["message"] == "No comments found!":
+        noCommentResponse = [{
+            "message": "No comments found",
+        }]
+        noCommentResponse_csv = pd.DataFrame(noCommentResponse)
+        print(noCommentResponse_csv)
+        filenameNoComments = f'{body["id"]}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
+        noCommentResponse_csv.to_csv(ospath.join('csv_files/tweet_comments', filenameNoComments), index = False)
+        return jsonify({
+            "message": "No comments found",
+        })
 
 @app.route("/download")
 def download():
