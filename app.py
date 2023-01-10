@@ -13,12 +13,6 @@ base_url = "http://localhost:3001"
 '''
 This is to set function to hit JS API
 '''
-def get_comments(id, start_time, end_time):
-    uri = base_url + f'/twitter/search-all/in_reply_to_status_id?id={id}&start_time={start_time}&end_time={end_time}'
-    response = requests.get(uri)
-    response_content = json.loads(response.content)
-    return response_content
-
 def get_tweet_list(user, maxResults, fromYear, fromMonth, fromDate, toYear, toMonth, toDate):
     uri = base_url + '/twitter/full-archive-search'
     body = {
@@ -35,6 +29,11 @@ def get_tweet_list(user, maxResults, fromYear, fromMonth, fromDate, toYear, toMo
     response_content = json.loads(response.content)
     return response_content["result"]
 
+def get_comments(id, start_time, end_time):
+    uri = base_url + f'/twitter/search-all/in_reply_to_status_id?id={id}&start_time={start_time}&end_time={end_time}'
+    response = requests.get(uri)
+    response_content = json.loads(response.content)
+    return response_content
 
 '''
 Python API Router
@@ -75,10 +74,11 @@ def get_comments_analised():
     data = get_comments(body["id"], body["start_time"], body["end_time"])
     if data["message"] == "Comments found!":
         # create response data to DataFrame
-        data_csv = pd.DataFrame(data)
+        data_result = data["result"]
+        data_csv = pd.DataFrame(data_result)
         # extract comments only from list of dictionaries from api response
         comments_arr = []
-        for item in data:
+        for item in data_result:
             comments_arr.append(item['text'])
         # do some sentiment analysis
         sentiment_classifier = pipeline('sentiment-analysis', model='finiteautomata/bertweet-base-sentiment-analysis')
@@ -91,9 +91,9 @@ def get_comments_analised():
         data_csv.to_csv(ospath.join('csv_files/tweet_comments', filename), index = False)
         # concat 2 list of dictionaries
         result = []
-        for index_a, item_a in enumerate(data):
+        for index_a, item_a in enumerate(data_result):
             for index_b, item_b in enumerate(sentiment_analysis_result):
-                merged_data = { **data[index_a], **sentiment_analysis_result[index_b] }
+                merged_data = { **data_result[index_a], **sentiment_analysis_result[index_b] }
             result.append(merged_data)
         return jsonify(result)
     elif data["message"] == "No comments found!":
