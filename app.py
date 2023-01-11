@@ -5,6 +5,7 @@ from transformers import pipeline
 import pandas as pd
 import os.path as ospath
 from flask import Flask, request, jsonify
+from time import sleep
 
 app = Flask(__name__)
 
@@ -114,18 +115,16 @@ def get_comments_analised():
 @app.route("/get-comments-analised-bulk", methods=["POST"])
 def get_comments_analised_bulk():
     input_json = request.get_json()
-    idArr = ["438146343953911808", "438221881347289088", "438228533899313152"]
     body = {
-        "id": input_json["id"],
-        # "id": idArr,
-        "start_time": input_json["start_time"],
-        "end_time": input_json["end_time"],
+        "id": input_json["id"], # array of tweet_id
+        "start_time": input_json["start_time"], # string for start_time (yyyy-mm-dd)
+        "end_time": input_json["end_time"], # string for end_time (yyyy-mm-dd)
     }
     result = []
     for val in body["id"]:
-        print(f'ONGOING FOR ID: {val}')
         data = get_comments(val, body["start_time"], body["end_time"])
         if data["message"] == "Comments found!":
+            print(f'ONGOING FOR ID: {val}')
             # create response data to DataFrame
             data_result = data["result"]
             data_csv = pd.DataFrame(data_result)
@@ -141,7 +140,7 @@ def get_comments_analised_bulk():
             # combine 2 DataFrames into single CSV
             data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
             filename = f'{val}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
-            data_csv.to_csv(ospath.join('csv_files/testing_tweet_comments', filename), index = False)
+            data_csv.to_csv(ospath.join('csv_files/bulk_tweet_comments', filename), index = False)
             # concat 2 list of dictionaries
             for index_a, item_a in enumerate(data_result):
                 for index_b, item_b in enumerate(sentiment_analysis_result):
@@ -151,17 +150,21 @@ def get_comments_analised_bulk():
             #     "count": len(result),
             #     "result": result,
             # })
-            print(f'PROCESS DONE FOR ID: {val}')
+            print(f'> PROCESS DONE FOR ID: {val}')
+            sleep(1.75)
         elif data["message"] == "No comments found!":
+            print(f'ONGOING FOR ID: {val}')
             noCommentResponse = [{
                 "message": "No comments found",
             }]
             noCommentResponse_csv = pd.DataFrame(noCommentResponse)
             filenameNoComments = f'{val}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
-            noCommentResponse_csv.to_csv(ospath.join('csv_files/testing_tweet_comments', filenameNoComments), index = False)
+            noCommentResponse_csv.to_csv(ospath.join('csv_files/bulk_tweet_comments', filenameNoComments), index = False)
             # return jsonify({
             #     "message": "No comments found",
             # })
+            print(f'> PROCESS DONE FOR ID: {val}')
+            sleep(1.75)
     return jsonify({
         "message": "Analysis finished!",
     })

@@ -1,0 +1,3 @@
+in_reply_to_user_id,author_id,id,conversation_id,created_at,edit_history_tweet_ids,text,author_name,label,score
+22919665,2944466252,558359526651330560,558014501245575168,2015-01-22T20:24:19.000Z,['558359526651330560'],"@AirAsia hey team, still nothing in my email",mick24365,NEG,0.9009515643119812
+22919665,2944466252,558113203201527808,558014501245575168,2015-01-22T04:05:31.000Z,['558113203201527808'],"@AirAsia hi nothing in the junk/spam boxes, thanks",mick24365,NEG,0.6774248480796814

@@ -1,0 +1,3 @@
+id,author_id,conversation_id,text,created_at,edit_history_tweet_ids,in_reply_to_user_id,author_name,label,score
+435981705657065473,51477629,435972052151836674,“@MAS: Hello from our Mr. Pilot bear! Let's explore Cambodia this week :) #MHmoments #MHjourneys http://t.co/4SoYPz1rFz”,2014-02-19T03:38:33.000Z,['435981705657065473'],19106719,mdfaruq,POS,0.9732134938240051
+435973251844411392,421753290,435972052151836674,"@MAS #MHmoments #MHjourneys hi, can my brother use my enrich card while check in? But I'm not flying with him. Thanks.",2014-02-19T03:04:57.000Z,['435973251844411392'],19106719,hanifmatzin,NEU,0.49406126141548157

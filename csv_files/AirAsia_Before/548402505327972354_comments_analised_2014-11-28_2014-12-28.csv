@@ -1,0 +1,4 @@
+conversation_id,edit_history_tweet_ids,id,text,created_at,in_reply_to_user_id,author_id,author_name,label,score
+548402505327972354,['548665202527318016'],548665202527318016,"@AirAsia kindly advise on flight AK6432 to KOTA BHARU on 27/12/14, 8.25am.",2014-12-27T02:22:32.000Z,22919665,2944477988,DefayeTeo,NEU,0.8417810201644897
+548402505327972354,['548421673511165952'],548421673511165952,"@AirAsia we bought tickets going to korea, do we have to pay anything to leave my country?(Philippines) how much and what is it for?",2014-12-26T10:14:50.000Z,22919665,1162299216,Xtinegerald,NEU,0.8437185883522034
+548402505327972354,['548403681888989184'],548403681888989184,@AirAsia jangan sampai kaunter drop bag tutup awal sebab banjir pulak. 😒😒😒,2014-12-26T09:03:21.000Z,22919665,98836293,NajayyLatiff,NEG,0.7236194014549255

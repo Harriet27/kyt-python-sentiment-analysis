@@ -1,0 +1,2 @@
+conversation_id,id,text,in_reply_to_user_id,author_id,created_at,edit_history_tweet_ids,author_name,label,score
+559484888853004290,559805696234225665,"@AirAsia When i click an email link and change departure date i can see ""Sold Out"" when the flight shows available on your website.",22919665,2997920637,2015-01-26T20:10:53.000Z,['559805696234225665'],KotBogdan2,NEG,0.9440286159515381

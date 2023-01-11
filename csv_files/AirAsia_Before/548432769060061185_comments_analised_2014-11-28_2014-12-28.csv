@@ -1,0 +1,5 @@
+id,author_id,conversation_id,text,created_at,edit_history_tweet_ids,in_reply_to_user_id,author_name,label,score
+548550567295860736,356393839,548432769060061185,@AirAsia country's #1 airline 👍🙏✈,2014-12-26T18:47:01.000Z,['548550567295860736'],22919665,SteelIain,NEU,0.9527820944786072
+548480329317486592,612783144,548432769060061185,Thank you @AirAsia for good initiatives in helping the flood victims.I hope other private sectors will contribute the same.  @tonyfernandes,2014-12-26T14:07:55.000Z,['548480329317486592'],22919665,AKaprawi,POS,0.9787378907203674
+548433712535191554,29406737,548432769060061185,"Waktu dilanda musibah, kita tahu siapa kawan, siapa lawan. Terima kasih @AirAsia kerana membantu. #PrayForPantaiTimur #Bah2014",2014-12-26T11:02:41.000Z,['548433712535191554'],22919665,ATMology,NEU,0.6473109126091003
+548433229888253952,628386064,548432769060061185,@AirAsia flight esok ke KB berjalan seperti biasa kew?,2014-12-26T11:00:46.000Z,['548433229888253952'],22919665,NickEfan,NEU,0.9772953987121582
