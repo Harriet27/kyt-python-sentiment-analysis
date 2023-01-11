@@ -61,7 +61,7 @@ def get_searched_tweets_list():
     # extract DataFrame to csv file
     filename = f'{body["user"]}_tweets_list_{body["fromDate"] + "-" + body["fromMonth"] + "-" + body["fromYear"]}_{body["toDate"] + "-" + body["toMonth"] + "-" + body["toYear"]}.csv'
     data_csv.to_csv(ospath.join('csv_files/searched_tweets_list', filename), index = False)
-    return data
+    return [d['tweet_id'] for d in data]
 
 @app.route("/get-comments-analised", methods=["POST"])
 def get_comments_analised():
@@ -95,18 +95,76 @@ def get_comments_analised():
             for index_b, item_b in enumerate(sentiment_analysis_result):
                 merged_data = { **data_result[index_a], **sentiment_analysis_result[index_b] }
             result.append(merged_data)
-        return jsonify(result)
+        # return jsonify(result)
+        return jsonify({
+            "count": len(result),
+            "result": result,
+        })
     elif data["message"] == "No comments found!":
         noCommentResponse = [{
             "message": "No comments found",
         }]
         noCommentResponse_csv = pd.DataFrame(noCommentResponse)
-        print(noCommentResponse_csv)
         filenameNoComments = f'{body["id"]}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
         noCommentResponse_csv.to_csv(ospath.join('csv_files/tweet_comments', filenameNoComments), index = False)
         return jsonify({
             "message": "No comments found",
         })
+
+@app.route("/get-comments-analised-bulk", methods=["POST"])
+def get_comments_analised_bulk():
+    input_json = request.get_json()
+    idArr = ["438146343953911808", "438221881347289088", "438228533899313152"]
+    body = {
+        "id": input_json["id"],
+        # "id": idArr,
+        "start_time": input_json["start_time"],
+        "end_time": input_json["end_time"],
+    }
+    result = []
+    for val in body["id"]:
+        print(f'ONGOING FOR ID: {val}')
+        data = get_comments(val, body["start_time"], body["end_time"])
+        if data["message"] == "Comments found!":
+            # create response data to DataFrame
+            data_result = data["result"]
+            data_csv = pd.DataFrame(data_result)
+            # extract comments only from list of dictionaries from api response
+            comments_arr = []
+            for item in data_result:
+                comments_arr.append(item['text'])
+            # do some sentiment analysis
+            sentiment_classifier = pipeline('sentiment-analysis', model='finiteautomata/bertweet-base-sentiment-analysis')
+            sentiment_analysis_result = sentiment_classifier(comments_arr)
+            # create sentiment analysis data to DataFrame
+            sentiment_analysis_result_csv = pd.DataFrame(sentiment_analysis_result)
+            # combine 2 DataFrames into single CSV
+            data_csv = pd.concat([data_csv, sentiment_analysis_result_csv], axis = 1)
+            filename = f'{val}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
+            data_csv.to_csv(ospath.join('csv_files/testing_tweet_comments', filename), index = False)
+            # concat 2 list of dictionaries
+            for index_a, item_a in enumerate(data_result):
+                for index_b, item_b in enumerate(sentiment_analysis_result):
+                    merged_data = { **data_result[index_a], **sentiment_analysis_result[index_b] }
+                result.append(merged_data)
+            # return jsonify({
+            #     "count": len(result),
+            #     "result": result,
+            # })
+            print(f'PROCESS DONE FOR ID: {val}')
+        elif data["message"] == "No comments found!":
+            noCommentResponse = [{
+                "message": "No comments found",
+            }]
+            noCommentResponse_csv = pd.DataFrame(noCommentResponse)
+            filenameNoComments = f'{val}_comments_analised_{body["start_time"]}_{body["end_time"]}.csv'
+            noCommentResponse_csv.to_csv(ospath.join('csv_files/testing_tweet_comments', filenameNoComments), index = False)
+            # return jsonify({
+            #     "message": "No comments found",
+            # })
+    return jsonify({
+        "message": "Analysis finished!",
+    })
 
 @app.route("/download")
 def download():
