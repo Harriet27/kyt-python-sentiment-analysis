@@ -1,0 +1,4 @@
+id,conversation_id,edit_history_tweet_ids,author_id,in_reply_to_user_id,created_at,text,author_name,label,score
+1096073405047193602,1096009749466894336,['1096073405047193602'],1094693470747402241,334032462,2019-02-14T15:47:18.000Z,@flyethiopian https://t.co/jEIoa5pA0z,Neguker1,NEU,0.9534716010093689
+1096061066172399619,1096009749466894336,['1096061066172399619'],332171773,334032462,2019-02-14T14:58:16.000Z,"@flyethiopian I know a family that needs to fly their infant to India for a heart surgery, and I reckon that a special plane with oxygen is necessary for https://t.co/vijgjF6qKy you have such planes available in Lagos? I'll appreciate your kind and swift response please.",NuratLiadi,NEU,0.5971993803977966
+1096060950732517376,1096009749466894336,['1096060950732517376'],332171773,334032462,2019-02-14T14:57:49.000Z,"@flyethiopian Hello, Good Afternoon. I've been calling your Lagos office 014610570 but nobody is picking up.",NuratLiadi,NEU,0.863845705986023

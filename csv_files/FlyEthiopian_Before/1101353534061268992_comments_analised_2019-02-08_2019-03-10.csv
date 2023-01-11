@@ -1,0 +1,3 @@
+conversation_id,edit_history_tweet_ids,id,text,created_at,in_reply_to_user_id,author_id,author_name,label,score
+1101352321664122882,['1101590312089202688'],1101590312089202688,"@flyethiopian Yes, it seems like I cannot check in online. I will DM you my flight details",2019-03-01T21:09:31.000Z,334032462,2316941846,RavS82,NEU,0.5663230419158936
+1101352321664122882,['1101353699811700736'],1101353699811700736,@flyethiopian Thanks,2019-03-01T05:29:18.000Z,334032462,2316941846,RavS82,POS,0.6139533519744873

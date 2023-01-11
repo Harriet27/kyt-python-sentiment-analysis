@@ -1,0 +1,5 @@
+created_at,author_id,id,conversation_id,edit_history_tweet_ids,in_reply_to_user_id,text,author_name,label,score
+2019-02-12T08:04:36.000Z,601665717,1095232186545000449,1094843955936665601,['1095232186545000449'],334032462,@flyethiopian Congratulations,SeyOmar,POS,0.9551525115966797
+2019-02-11T14:00:25.000Z,846692142307258368,1094959342279905280,1094843955936665601,['1094959342279905280'],334032462,@flyethiopian This man deserve more bro .,MeheretuTirune,POS,0.7807759046554565
+2019-02-11T13:14:36.000Z,858826004634193921,1094947815132971009,1094843955936665601,['1094947815132971009'],334032462,@flyethiopian This is s crazy guy!!!!!,ah_ritafeven,NEG,0.9810583591461182
+2019-02-11T07:45:04.000Z,869800632705789952,1094864885480083456,1094843955936665601,['1094864885480083456'],334032462,@flyethiopian Great to hear that. Just wish your customer service was as consistent as your tweets and your refunds as well. I have waited long enough with this horrible service. The only way to get noticed is by relying to every tweet. I need my MoNEY,Sam291084,NEG,0.9807837605476379
