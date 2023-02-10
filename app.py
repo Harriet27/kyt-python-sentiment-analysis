@@ -96,7 +96,6 @@ def get_comments_analised():
             for index_b, item_b in enumerate(sentiment_analysis_result):
                 merged_data = { **data_result[index_a], **sentiment_analysis_result[index_b] }
             result.append(merged_data)
-        # return jsonify(result)
         return jsonify({
             "count": len(result),
             "result": result,
@@ -178,5 +177,7 @@ def download():
         print(f"Downloading {filename}")
         return f_out.write(r.content)
 
+localhost_port = 8000
 if __name__ == "__main__":
-    app.run(port = 8000, debug = True)
+    print(f'<> APP IS RUNNING ON PORT http://localhost:{localhost_port} <>')
+    app.run(port = localhost_port, debug = True)
