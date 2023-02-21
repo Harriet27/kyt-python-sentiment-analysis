@@ -1,0 +1,3 @@
+text,in_reply_to_user_id,created_at,conversation_id,id,edit_history_tweet_ids,author_id,author_name,label,score
+"@AirAsia Btw, i have sent the details of issue. This problem will happen again for new transaction (same payment method). Please look for it",22919665,"26 January 2015, 2:49:41 PM",559543449452433409,559619166315900928,['559619166315900928'],423520794,MuK_71,NEG,0.8565678596496582
+"@AirAsia Hi, It is solved. Thanks.",22919665,"26 January 2015, 2:46:28 PM",559543449452433409,559618357343698944,['559618357343698944'],423520794,MuK_71,POS,0.9529146552085876

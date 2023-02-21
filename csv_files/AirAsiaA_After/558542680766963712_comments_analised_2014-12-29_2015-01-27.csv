@@ -1,6 +1,0 @@
-id,conversation_id,edit_history_tweet_ids,author_id,in_reply_to_user_id,created_at,text,author_name,label,score
-559491148217991170,557793104536018944,['559491148217991170'],561873228,22919665,2015-01-25T23:20:59.000Z,@AirAsia hotel room charged. Pls revert ASAP.,emilychiewpc,NEU,0.6988404989242554
-559490911709585409,557793104536018944,['559490911709585409'],561873228,22919665,2015-01-25T23:20:02.000Z,@AirAsia I need the answer ASAP. Flight was in morning 14/2 arrive same day. Now you cancelled flight last minute. Need rearrange  hotel.,emilychiewpc,NEG,0.9728531241416931
-559490243376607232,557793104536018944,['559490243376607232'],561873228,22919665,2015-01-25T23:17:23.000Z,@AirAsia booking number SG2Q8X,emilychiewpc,NEU,0.9746738076210022
-559489961003450370,557793104536018944,['559489961003450370'],561873228,22919665,2015-01-25T23:16:16.000Z,"@AirAsia my booking number is SG2Q8X.
-Departure is 14/2/2015. Pls change to 13/2/2015. Do revert ASAP. As I had booked room on 14/2.",emilychiewpc,NEU,0.9442062973976135

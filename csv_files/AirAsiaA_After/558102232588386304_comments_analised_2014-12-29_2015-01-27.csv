@@ -1,3 +1,0 @@
-id,author_id,text,in_reply_to_user_id,created_at,conversation_id,edit_history_tweet_ids,author_name,label,score
-558105986318467075,206692640,@AirAsia thanks,22919665,2015-01-22T03:36:50.000Z,558082510627033091,['558105986318467075'],yanniejla0805,POS,0.8730221390724182
-558105362893918209,206692640,@AirAsia when i click the email that Air Asia sent seem it unvalid,22919665,2015-01-22T03:34:22.000Z,558082510627033091,['558105362893918209'],yanniejla0805,NEG,0.8522977828979492

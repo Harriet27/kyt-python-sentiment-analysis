@@ -1,0 +1,3 @@
+text,in_reply_to_user_id,created_at,conversation_id,id,edit_history_tweet_ids,author_id,author_name,label,score
+@AirAsia thank you,22919665,"26 January 2015, 12:33:56 PM",557793104536018944,559585004846465028,['559585004846465028'],561873228,emilychiewpc,POS,0.9516137838363647
+@AirAsia,22919665,"26 January 2015, 12:33:52 PM",557793104536018944,559584988438343680,['559584988438343680'],561873228,emilychiewpc,NEU,0.9358916878700256

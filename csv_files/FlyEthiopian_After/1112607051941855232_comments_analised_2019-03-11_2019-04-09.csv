@@ -1,5 +1,0 @@
-author_id,conversation_id,created_at,edit_history_tweet_ids,in_reply_to_user_id,text,id,author_name,label,score
-164301494,1112607051941855232,2019-04-01T18:23:57.000Z,['1112782669551730693'],334032462,"@flyethiopian #EthiopianAirlines customer service could be better!
-I am still waiting for response to a query about ET729 whether my Ethiopian wife and son need an air transit visa for Brussels airport as the flight stops there on way to Bole",1112782669551730693,Terry_water,NEG,0.5692532658576965
-1111690136977371136,1112607051941855232,2019-04-01T17:03:35.000Z,['1112762442591948801'],334032462,@flyethiopian Waww an amazing organiztion .would you mind to join me? If so how please explain it am interested very well to join,1112762442591948801,YaregalMengaw,POS,0.9893317222595215
-124761339,1112607051941855232,2019-04-01T14:59:58.000Z,['1112731336576548865'],334032462,@flyethiopian Would love to join. What is the criteria?,1112731336576548865,hanbeke,POS,0.8870220184326172

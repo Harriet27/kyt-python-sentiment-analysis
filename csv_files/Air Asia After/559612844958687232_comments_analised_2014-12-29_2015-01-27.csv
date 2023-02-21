@@ -1,0 +1,3 @@
+text,in_reply_to_user_id,created_at,conversation_id,id,edit_history_tweet_ids,author_id,author_name,label,score
+@AirAsia ... If I go to http://t.co/fRFGJEzggZ I get a word that can be quite offensive in Australia. Might want to change that. Look it up.,22919665,"26 January 2015, 2:26:45 PM",559612686330105856,559613396132167681,['559613396132167681'],945099510,YusefDanet,NEG,0.9539796113967896
+@AirAsia good online service. While I have your attention... One thing...,22919665,"26 January 2015, 2:25:49 PM",559612686330105856,559613163327344641,['559613163327344641'],945099510,YusefDanet,POS,0.9802170395851135

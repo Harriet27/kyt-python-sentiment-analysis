@@ -1,0 +1,3 @@
+text,in_reply_to_user_id,created_at,conversation_id,id,edit_history_tweet_ids,author_id,author_name,label,score
+@MAS &gt; KLM just shows it in ticket conditions.,19106719,"21 February 2014, 4:46:50 PM",436478518156070912,436799162060132352,['436799162060132352'],29956708,janjongboom,NEU,0.9604972004890442
+"@MAS Well, that's quite annoying that you can't see it during booking. Don't know which fare class to pick if ticket might change. :-)",19106719,"21 February 2014, 4:46:31 PM",436478518156070912,436799082259312640,['436799082259312640'],29956708,janjongboom,NEG,0.9190848469734192

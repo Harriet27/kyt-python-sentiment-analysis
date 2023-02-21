@@ -1,1 +1,0 @@
-directory to dump all the bulk export csv
